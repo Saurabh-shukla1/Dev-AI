@@ -1,0 +1,17 @@
+# This is a config for E2B sandbox template.
+# You can use template ID (hlf145gotjal8y8l6y8k) or template name (DevAI-nextjs-saurabh-2) to create a sandbox:
+
+# Python SDK
+# from e2b import Sandbox, AsyncSandbox
+# sandbox = Sandbox("DevAI-nextjs-saurabh-2") # Sync sandbox
+# sandbox = await AsyncSandbox.create("DevAI-nextjs-saurabh-2") # Async sandbox
+
+# JS SDK
+# import { Sandbox } from 'e2b'
+# const sandbox = await Sandbox.create('DevAI-nextjs-saurabh-2')
+
+team_id = "829d9508-2ae5-48dc-91d5-17f9fd393903"
+start_cmd = "/compile_page.sh"
+dockerfile = "e2b.Dockerfile"
+template_name = "DevAI-nextjs-saurabh-2"
+template_id = "hlf145gotjal8y8l6y8k"
