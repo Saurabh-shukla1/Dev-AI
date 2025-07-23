@@ -6,11 +6,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const Client = () => {
    const trpc = useTRPC();
-   const { data } = useSuspenseQuery(trpc.createAI.queryOptions({ text: "Saurabh" }));
+   //const { data } = useSuspenseQuery(trpc.createAI.queryOptions({ text: "Saurabh" }));
    
    return(
     <div>
-        {JSON.stringify(data)}
+        {/* {JSON.stringify(data)} */}
     </div>
    )
 }
