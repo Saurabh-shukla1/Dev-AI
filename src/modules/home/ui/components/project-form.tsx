@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { fa } from "zod/v4/locales";
 import { useRouter } from "next/navigation";
-import { PROJECT_TEMPLATES } from "./constants";
+import { PROJECT_TEMPLATES } from "../constants";
+import { useClerk } from "@clerk/nextjs";
 
 
 
@@ -27,6 +28,7 @@ export const ProjectForm = () => {
 
     const queryClient = useQueryClient();
     const trpc = useTRPC();
+    const clerk = useClerk();
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -44,6 +46,10 @@ export const ProjectForm = () => {
             //TODO: invalidate usases stats
         },
         onError: (error) => {
+            if(error.data?.code === "UNAUTHORIZED") {
+                clerk.openSignIn()
+            }
+
             //TODO: redirect to pricing page if specific error
             toast.error(error.message || "Failed to create message");
         },
