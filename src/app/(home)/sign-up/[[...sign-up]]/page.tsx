@@ -8,7 +8,7 @@ const page = () => {
   const currentTheme = useCurrentTheme();
   return (
     <div className="flex flex-col max-w-3xl mx-auto w-full md:mt-10 lg:mt-0">
-        <section className="space-y-6 pt-[i6vh] 2xl:pt-30">
+        <section className="space-y-6 pt-[16vh] 2xl:pt-48">
             <div className="flex flex-col items-center">
                 <SignUp 
                 appearance={{

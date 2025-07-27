@@ -43,13 +43,15 @@ export const ProjectForm = () => {
                 trpc.projects.getMany.queryOptions()
             );
             router.push(`/projects/${data.id}`);
-            //TODO: invalidate usases stats
+            queryClient.invalidateQueries(
+                trpc.usage.status.queryOptions()
+            )
         },
         onError: (error) => {
             if(error.data?.code === "UNAUTHORIZED") {
                 clerk.openSignIn()
             }
-
+            router.push("/pricing");
             //TODO: redirect to pricing page if specific error
             toast.error(error.message || "Failed to create message");
         },
