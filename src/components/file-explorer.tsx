@@ -8,19 +8,15 @@ import {
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 } from "./ui/breadcrumb";
 
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "./ui/resizable";
-import path from "path";
-import { fi } from "date-fns/locale";
 import { CopyCheckIcon, CopyIcon } from "lucide-react";
 import { convertFilesToTreeItems } from "@/lib/utils";
 import { TreeView } from "./tree-view";
-import { spawn } from "child_process";
 
 type FileCollection = { [path: string]: string };
 

@@ -12,7 +12,7 @@ import {
   SidebarRail,
 }
 from "@/components/ui/sidebar";
-import { ChevronRightIcon, FileIcon, Folder, FolderIcon } from "lucide-react";
+import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 
 

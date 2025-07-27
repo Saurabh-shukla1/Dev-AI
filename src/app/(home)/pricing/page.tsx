@@ -5,7 +5,7 @@ import { PricingTable } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 
-const page = () => {
+const Page = () => {
     const currentTheme = useCurrentTheme();
     return (
         <div className="flex flex-col max-w-3xl mx-auto w-full">
@@ -36,4 +36,4 @@ const page = () => {
     )
 }
 
-export default page;
+export default Page;

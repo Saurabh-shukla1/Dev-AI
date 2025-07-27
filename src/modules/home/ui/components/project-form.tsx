@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import { fa } from "zod/v4/locales";
 import { useRouter } from "next/navigation";
 import { PROJECT_TEMPLATES } from "../constants";
 import { useClerk } from "@clerk/nextjs";
