@@ -6,6 +6,7 @@ import { getsandbox, lastAssitantTextMessageContent } from "./utils";
 import { z } from "zod";
 import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from "@/prompt";
 import { prisma } from "@/lib/db";
+import { SANDBOX_TIMEOUT } from "./types";
 
 
 interface AgentState {
@@ -20,8 +21,9 @@ export const codeAgentFunction = inngest.createFunction(
     const sandboxId = await step.run("get-sandbox-id",
       async () => {
         const sandbox = await Sandbox.create("devai-nextjs-saurabh-2");
+        await sandbox.setTimeout(SANDBOX_TIMEOUT); // 10 minutes
         return sandbox.sandboxId;
-      }
+      },
     );
 
     const previousMessages = await step.run("get-previous-messages", async () => {
@@ -32,8 +34,9 @@ export const codeAgentFunction = inngest.createFunction(
           projectId: event.data.projectId,
         },
         orderBy: {
-          createdAt: "asc"
-        }
+          createdAt: "desc"
+        },
+        take: 5, // Limit to the last 5 messages
       });
       for(const message of messages) {
         formattedMessages.push({
@@ -42,7 +45,7 @@ export const codeAgentFunction = inngest.createFunction(
           content: message.content,
         });
       }
-      return formattedMessages;
+      return formattedMessages.reverse();
     });
     
     const state = createState<AgentState> (

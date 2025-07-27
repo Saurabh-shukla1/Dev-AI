@@ -4,7 +4,7 @@ import { SignUp } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
 
-const page = () => {
+const Page = () => {
   const currentTheme = useCurrentTheme();
   return (
     <div className="flex flex-col max-w-3xl mx-auto w-full md:mt-10 lg:mt-0">
@@ -24,4 +24,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

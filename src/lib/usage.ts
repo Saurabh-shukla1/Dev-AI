@@ -3,7 +3,6 @@
 import { RateLimiterPrisma} from "rate-limiter-flexible";
 import { prisma } from "./db";
 import { auth } from "@clerk/nextjs/server";
-import { Usage } from "@/modules/ui/components/usages";
 
 
 const FREE_POINTS = 2;
