@@ -1,10 +1,10 @@
 
 import { Sandbox } from "@e2b/code-interpreter"
 import { inngest } from "./client";
-import { gemini, createAgent, createTool, createNetwork, Tool} from "@inngest/agent-kit";
+import { gemini, createAgent, createTool, createNetwork, Tool, Message, createState} from "@inngest/agent-kit";
 import { getsandbox, lastAssitantTextMessageContent } from "./utils";
 import { z } from "zod";
-import { PROMPT } from "@/prompt";
+import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from "@/prompt";
 import { prisma } from "@/lib/db";
 
 
@@ -22,7 +22,40 @@ export const codeAgentFunction = inngest.createFunction(
         const sandbox = await Sandbox.create("devai-nextjs-saurabh-2");
         return sandbox.sandboxId;
       }
-    )
+    );
+
+    const previousMessages = await step.run("get-previous-messages", async () => {
+      const formattedMessages: Message[] = [];
+
+      const messages = await prisma.message.findMany({
+        where:{
+          projectId: event.data.projectId,
+        },
+        orderBy: {
+          createdAt: "asc"
+        }
+      });
+      for(const message of messages) {
+        formattedMessages.push({
+          type: "text",
+          role: message.role === "ASSISTANT" ? "assistant" : "user",
+          content: message.content,
+        });
+      }
+      return formattedMessages;
+    });
+    
+    const state = createState<AgentState> (
+      {
+        summary: "",
+        files: {},
+      },
+      {
+        messages: previousMessages,
+      }
+    );
+
+
     if (!sandboxId) {
       throw new Error("Failed to create or retrieve sandbox ID");
     }
@@ -137,6 +170,7 @@ export const codeAgentFunction = inngest.createFunction(
       name: "coading-agent-network",
       agents: [codeAgent],
       maxIter: 15,
+      defaultState: state,
       router: async ({ network }) => {
         const summary = network.state.data.summary;
 
@@ -148,7 +182,50 @@ export const codeAgentFunction = inngest.createFunction(
     });
 
 
-    const result = await network.run(event.data.value);
+    const result = await network.run(event.data.value, {state});
+
+    const fragmentTitleGenerator = createAgent({
+      name: "fragment-title-generator",
+      description: "An agent that generates fragment titles",
+      system: FRAGMENT_TITLE_PROMPT,
+      model: gemini({ model: "gemini-1.5-flash" }),
+    })
+
+    const ResponseGenerator = createAgent({
+      name: "response-generator",
+      description: "An agent that generates responses",
+      system: RESPONSE_PROMPT,
+      model: gemini({ model: "gemini-1.5-flash" }),
+    })
+
+    const { output: fragmentTitleOutput } = await fragmentTitleGenerator.run(result.state.data.summary);
+    const { output: responseOutput } = await ResponseGenerator.run(result.state.data.summary);
+
+    const generateFragmentTitle = () => {
+      if(fragmentTitleOutput[0].type !== "text") {
+        return "Fragment";
+      }
+
+      if(Array.isArray(fragmentTitleOutput[0].content)) {
+        return fragmentTitleOutput[0].content.map((txt) => txt).join(" ");
+      }
+      else{
+        return fragmentTitleOutput[0].content;
+      } 
+    }
+
+    const generateResponse = () => {
+      if(responseOutput[0].type !== "text") {
+        return "Here you go";
+      }
+
+      if(Array.isArray(responseOutput[0].content)) {
+        return responseOutput[0].content.map((txt) => txt).join(" ");
+      }
+      else{
+        return responseOutput[0].content;
+      } 
+    }
 
     const isError = 
       !result.state.data.summary ||
@@ -175,14 +252,14 @@ export const codeAgentFunction = inngest.createFunction(
 
       return await prisma.message.create({
         data: {
-          content: result.state.data.summary,
+          content: generateResponse(),
           projectId: event.data.projectId,
           role: "ASSISTANT",
           type: "RESULT",
           fragment: {
             create: {
               sandboxUrl: sandboxUrl,
-              title: "Fragment",
+              title: generateFragmentTitle(),
               files: result.state.data.files,
             }
           }
