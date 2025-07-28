@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dev-AI
 
-## Getting Started
+Dev-AI is a next-generation, fullstack SaaS AI assistant inspired by Claude, designed to generate intelligent, context-aware responses to user prompts. Powered by [Next.js](https://nextjs.org/), [tRPC](https://trpc.io/), [Inngest](https://www.inngest.com/), [e2b sandbox](https://e2b.dev/), [Clerk](https://clerk.com/) for authentication and subscriptions, and [Tailwind CSS](https://tailwindcss.com/) for UI, Dev-AI is engineered for scalability, security, and developer productivity.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- **Claude-style Conversational AI:** Generate insightful, context-rich AI responses.
+- **SaaS-Ready Multi-Tenancy:** Secure authentication, user management, and subscriptions via Clerk.
+- **Next.js Fullstack Framework:** Seamless SSR, SSG, API routes, and React-powered UI.
+- **tRPC:** End-to-end typesafe API communication between frontend and backend.
+- **Inngest:** Event-driven, recursive workflows and background processing.
+- **e2b Sandbox:** Secure, isolated code execution for advanced AI tasks.
+- **Tailwind CSS:** Modern, utility-first styling for a fast and beautiful UI.
+- **Extensible & Modular:** Easily add new models, endpoints, or features.
+- **Cloud Native:** Deploy effortlessly on Vercel, AWS, or your preferred platform.
+
+---
+
+## 🛠 Tech Stack
+
+- **Framework:** Next.js (TypeScript)
+- **API:** tRPC
+- **Workflows:** Inngest
+- **Sandboxing:** e2b sandbox
+- **Authentication & Subscription:** Clerk
+- **Styling:** Tailwind CSS
+- **Languages:** TypeScript (95.6%), CSS (3.8%), Other (0.6%)
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v16+)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Installation
+
+```bash
+git clone https://github.com/Saurabh-shukla1/Dev-AI.git
+cd Dev-AI
+npm install
+# or
+yarn install
+```
+
+### Environment Setup
+
+Copy `.env.example` to `.env` and fill in all required environment variables (Clerk, e2b, Inngest, etc.).
+
+### Running the App
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to use the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Usage
 
-## Learn More
+1. **Sign up or log in** using Clerk.
+2. **Enter your prompt** into the interface.
+3. **Receive context-aware AI responses** in real time.
+4. **Manage your subscription and profile** within your dashboard.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📚 Reference
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- See [`package.json`](./package.json) for all dependencies and scripts.
+- Documentation:
+  - [Next.js](https://nextjs.org/docs)
+  - [tRPC](https://trpc.io/docs)
+  - [Inngest](https://www.inngest.com/docs)
+  - [e2b sandbox](https://e2b.dev/docs)
+  - [Clerk](https://clerk.com/docs)
+  - [Tailwind CSS](https://tailwindcss.com/docs)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🙏 Acknowledgements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Inspired by [Claude AI](https://claude.ai/)
+
+---
+
+## 📝 License
+
+[MIT](./LICENSE) —  contribute!
+
+---
+
+**Built with ❤️ by [Saurabh-shukla1](https://github.com/Saurabh-shukla1)**
