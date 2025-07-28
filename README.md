@@ -1,8 +1,9 @@
-# Dev-AI
+# ![Logo](./public/logo.svg)  Dev-AI
 
 Dev-AI is a next-generation, fullstack SaaS AI assistant inspired by Claude, designed to generate intelligent, context-aware responses to user prompts. Powered by [Next.js](https://nextjs.org/), [tRPC](https://trpc.io/), [Inngest](https://www.inngest.com/), [e2b sandbox](https://e2b.dev/), [Clerk](https://clerk.com/) for authentication and subscriptions, and [Tailwind CSS](https://tailwindcss.com/) for UI, Dev-AI is engineered for scalability, security, and developer productivity.
 
 ---
+![Logo](./public/logo.svg)
 
 ## 🚀 Features
 
