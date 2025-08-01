@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { UserControl } from "@/components/user-control";
 import { useScroll } from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,8 +35,17 @@ export const  Navbar = () => {
                 </Link>
                 <SignedOut>
                     <div className="flex gap-2">
+                        <Link href="https://github.com/Saurabh-shukla1/Dev-AI" >
+                            <Image
+                                src="/github.svg"
+                                alt="GitHub"
+                                width={30}
+                                height={30}
+                                className="rounded-full hover:opacity-75 transition-opacity bg-white"
+                            />
+                        </Link>
                         <SignUpButton>
-                            <Button variant="outline" size="sm">
+                            <Button variant="default" size="sm">
                                 Sign Up
                             </Button>
                         </SignUpButton>
