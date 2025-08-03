@@ -5,7 +5,7 @@ import { UserControl } from "@/components/user-control";
 import { useScroll } from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { Github } from "lucide-react";
+import { Github, GithubIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,13 +36,7 @@ export const  Navbar = () => {
                 <SignedOut>
                     <div className="flex gap-2">
                         <Link href="https://github.com/Saurabh-shukla1/Dev-AI" >
-                            <Image
-                                src="github.svg"
-                                alt="GitHub"
-                                width={30}
-                                height={30}
-                                className="rounded-full hover:opacity-75 transition-opacity bg-white"
-                            />
+                            <GithubIcon className="bg-black text-white p-1 rounded-full h-8 w-8"/>
                         </Link>
                         <SignUpButton>
                             <Button variant="default" size="sm">
