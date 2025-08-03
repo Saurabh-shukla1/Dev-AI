@@ -84,13 +84,6 @@ Visit [http://localhost:3000](http://localhost:3000) to use the app.
   - [Clerk](https://clerk.com/docs)
   - [Tailwind CSS](https://tailwindcss.com/docs)
 
----
-
-## 🙏 Acknowledgements
-
-- Inspired by [Claude AI](https://claude.ai/)
-
----
 
 ## 📝 License
 
