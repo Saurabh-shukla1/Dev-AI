@@ -37,7 +37,7 @@ export const  Navbar = () => {
                     <div className="flex gap-2">
                         <Link href="https://github.com/Saurabh-shukla1/Dev-AI" >
                             <Image
-                                src="/github.svg"
+                                src="github.svg"
                                 alt="GitHub"
                                 width={30}
                                 height={30}
