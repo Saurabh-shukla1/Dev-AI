@@ -1,11 +1,11 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { UserControl } from "@/components/user-control";
 import { useScroll } from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
-import { Github, GithubIcon } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
