@@ -66,7 +66,7 @@ export const codeAgentFunction = inngest.createFunction(
       name: "codeAgent",
       description: "An expert coding agent",
       system: PROMPT,
-      model: gemini({ model: "gemini-2.5-pro" }),
+      model: gemini({ model: "gemini-2.0-flash" }),
       tools: [
         createTool({
           name: 'terminal',
