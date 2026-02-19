@@ -66,18 +66,20 @@ export const codeAgentFunction = inngest.createFunction(
       name: "codeAgent",
       description: "An expert coding agent",
       system: PROMPT,
-      model: gemini({ model: "gemini-2.0-flash" }),
+      model: gemini({ model: "gemini-2.5-flash" }),
       tools: [
         createTool({
-          name: 'terminal',
-          description: 'Use the terminal to run commands',
+          name: "terminal",
+          description: "Use the terminal to run commands",
           parameters: z.object({
-            command: z.string().describe("The command to execute in the terminal"),
+            command: z
+              .string()
+              .describe("The command to execute in the terminal"),
           }),
           handler: async ({ command }, { step }) => {
             return await step?.run("terminal", async () => {
               const buffer = { stdout: "", stderr: "" };
-              
+
               try {
                 const sandbox = await getsandbox(sandboxId);
                 const result = await sandbox.commands.run(command, {
@@ -86,15 +88,17 @@ export const codeAgentFunction = inngest.createFunction(
                   },
                   onStderr: (data: string) => {
                     buffer.stderr += data;
-                  }
+                  },
                 });
                 return result.stdout;
-                } catch (e) {
-                  console.error(`Command failed: ${e} \n stdout: ${buffer.stdout} \n stderr: ${buffer.stderr}`);
-                  return `Command failed: ${e} \nstdout: ${buffer.stdout}\nstderr: ${buffer.stderr}`;
-                  }
-              });
-          }
+              } catch (e) {
+                console.error(
+                  `Command failed: ${e} \n stdout: ${buffer.stdout} \n stderr: ${buffer.stderr}`,
+                );
+                return `Command failed: ${e} \nstdout: ${buffer.stdout}\nstderr: ${buffer.stderr}`;
+              }
+            });
+          },
         }),
         createTool({
           name: "createOrUpdateFiles",
@@ -109,25 +113,28 @@ export const codeAgentFunction = inngest.createFunction(
           }),
           handler: async (
             { files },
-            { step, network }: Tool.Options<AgentState>
+            { step, network }: Tool.Options<AgentState>,
           ) => {
-            const newFiles = await step?.run("createOrUpdateFiles" , async () => {
-              try {
-                const updatedFiles = network.state.data.files || {};
-                const sandbox = await getsandbox(sandboxId);
-                for(const file of files){
-                  await sandbox.files.write(file.path, file.content);
-                  updatedFiles[file.path] = file.content;
+            const newFiles = await step?.run(
+              "createOrUpdateFiles",
+              async () => {
+                try {
+                  const updatedFiles = network.state.data.files || {};
+                  const sandbox = await getsandbox(sandboxId);
+                  for (const file of files) {
+                    await sandbox.files.write(file.path, file.content);
+                    updatedFiles[file.path] = file.content;
+                  }
+                  return updatedFiles;
+                } catch (e) {
+                  return "Error: " + e;
                 }
-                return updatedFiles;
-              } catch (e) {
-                return "Error: " + e;
-              }
-            });
-            if(typeof newFiles === "object"){
+              },
+            );
+            if (typeof newFiles === "object") {
               network.state.data.files = newFiles;
             }
-          }
+          },
         }),
         createTool({
           name: "readFiles",
@@ -135,37 +142,37 @@ export const codeAgentFunction = inngest.createFunction(
           parameters: z.object({
             files: z.array(z.string()),
           }),
-          handler:  async ({ files }, { step }) => {
+          handler: async ({ files }, { step }) => {
             return await step?.run("readFiles", async () => {
               try {
                 const sandbox = await getsandbox(sandboxId);
                 const contents = [];
-                for(const file of files) {
+                for (const file of files) {
                   const content = await sandbox.files.read(file);
-                  contents.push({ path: file, content})
+                  contents.push({ path: file, content });
                 }
                 return JSON.stringify(contents);
               } catch (e) {
                 return "Error: " + e;
               }
-            })
-          }
-        })
+            });
+          },
+        }),
       ],
       lifecycle: {
         onResponse: async ({ result, network }) => {
-          const lastAssitantMessageText = 
-          lastAssitantTextMessageContent(result);
+          const lastAssitantMessageText =
+            lastAssitantTextMessageContent(result);
 
-          if(lastAssitantMessageText && network) {
-            if(lastAssitantMessageText.includes("<task_summary>")){
+          if (lastAssitantMessageText && network) {
+            if (lastAssitantMessageText.includes("<task_summary>")) {
               network.state.data.summary = lastAssitantMessageText;
             }
           }
 
           return result;
-        }
-      }
+        },
+      },
     });
 
 
@@ -191,15 +198,15 @@ export const codeAgentFunction = inngest.createFunction(
       name: "fragment-title-generator",
       description: "An agent that generates fragment titles",
       system: FRAGMENT_TITLE_PROMPT,
-      model: gemini({ model: "gemini-1.5-flash" }),
-    })
+      model: gemini({ model: "gemini-2.5-flash" }),
+    });
 
     const ResponseGenerator = createAgent({
       name: "response-generator",
       description: "An agent that generates responses",
       system: RESPONSE_PROMPT,
-      model: gemini({ model: "gemini-1.5-flash" }),
-    })
+      model: gemini({ model: "gemini-2.5-flash" }),
+    });
 
     const { output: fragmentTitleOutput } = await fragmentTitleGenerator.run(result.state.data.summary);
     const { output: responseOutput } = await ResponseGenerator.run(result.state.data.summary);
